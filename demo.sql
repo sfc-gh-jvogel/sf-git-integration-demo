@@ -24,7 +24,7 @@ CREATE OR REPLACE TABLE TODOS (
 LS @KAMESH_GIT_REPOS.PUBLIC.git_integration_demo/branches/main/;
 
 -- Create  the stage to copy all files from git stage to current data stage
-CREATE STAGE git_data
+CREATE STAGE IF NOT EXISTS git_data
   ENCRYPTION = (TYPE = 'SNOWFLAKE_SSE');
   
 COPY FILES
