@@ -1,4 +1,6 @@
 title,description,category,status
+Learn Snowflake Git Integration, Learn how to use Snowflake GIT integration.,learning,true
+Learn Snowflake CLI, Learn how to use snow cli.,learning,false
 Learn Redpanda CLI, Learn how to use rpk cli.,learning,false
 Learn Snowflake and Streamlit, Learn how to integrate snowflake with streamlit.,learning,false
 Create GitHub Repo, Create GitHub Repository for todo-demo.,code,false
