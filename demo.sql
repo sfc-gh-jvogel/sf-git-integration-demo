@@ -21,17 +21,20 @@ CREATE OR REPLACE TABLE TODOS (
 );
 
 -- List files
-LS @KAMESH_GIT_REPOS.PUBLIC.git_integration_demo/branches/main/;
+LS @KAMESH_GIT_REPOS.GITHUB.git_integration_demo/branches/main/;
 
 -- Create  the stage to copy all files from git stage to current data stage
 CREATE STAGE IF NOT EXISTS git_data
   ENCRYPTION = (TYPE = 'SNOWFLAKE_SSE');
-  
+
+-- Copy fies from git into local stage
 COPY FILES
   INTO @git_data
-  FROM @KAMESH_GIT_REPOS.PUBLIC.git_integration_demo/branches/main/todos.csv;
+  FROM @KAMESH_GIT_REPOS.GITHUB.git_integration_demo/branches/main/todos.csv;
 
+-- Load the CSV into the table
 COPY INTO TODOS FROM @git_data/todos.csv 
   FILE_FORMAT = csv_ff;
 
+-- check the data
 SELECT * FROM TODOS;
