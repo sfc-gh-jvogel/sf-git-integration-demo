@@ -2,18 +2,36 @@ USE ROLE ACCOUNTADMIN;
 
 CREATE DATABASE IF NOT EXISTS KAMESH_DEMO_DB;
 
+USE WAREHOUSE KAMESH_DEMOS_S;
+
 USE DATABASE KAMESH_DEMO_DB;
 
 CREATE SCHEMA IF NOT EXISTS DATA;
 
-CREATE IF NOT EXISTS FILE FORMAT csv_ff
+USE SCHEMA DATA;
+
+CREATE FILE FORMAT IF NOT EXISTS  csv_ff
     SKIP_HEADER=1;
 
 CREATE OR REPLACE TABLE TODOS (
     TITLE STRING,
     DESCRIPTION STRING,
     CATEGORY STRING,
-    STATUS BOOLEAN,
-)
+    STATUS BOOLEAN
+);
 
-COPY INTO TODOS FROM @git_integration_demo/branches/main/todos.csv
+-- List files
+LS @KAMESH_GIT_REPOS.PUBLIC.git_integration_demo/branches/main/;
+
+-- Create  the stage to copy all files from git stage to current data stage
+CREATE STAGE git_data
+  ENCRYPTION = (TYPE = 'SNOWFLAKE_SSE');
+  
+COPY FILES
+  INTO @git_data
+  FROM @KAMESH_GIT_REPOS.PUBLIC.git_integration_demo/branches/main/todos.csv;
+
+COPY INTO TODOS FROM @git_data/todos.csv 
+  FILE_FORMAT = csv_ff;
+
+SELECT * FROM TODOS;

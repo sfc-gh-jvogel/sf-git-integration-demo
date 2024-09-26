@@ -15,7 +15,7 @@ CREATE API INTEGRATION IF NOT EXISTS  kameshsampath_git
 -- Create Repository - this will be a stage in Snowflake
 CREATE GIT REPOSITORY IF NOT EXISTS git_integration_demo
     API_INTEGRATION = kameshsampath_git
-    ORIGIN = 'https://github.com/kameshsampath/git-integration-demo.git';
+    ORIGIN = 'https://github.com/kameshsampath/sf-git-integration-demo.git';
 
 -- Refresh repoistory
 ALTER GIT REPOSITORY git_integration_demo FETCH;
