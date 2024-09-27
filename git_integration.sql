@@ -1,11 +1,18 @@
+-- Use role that has permissions to create API Integration
 USE ROLE ACCOUNTADMIN;
 
--- USE the warehouse that your session e.g. COMPUTE_WH
+-- Create and use the warehouse that your session
+CREATE WAREHOUSE IF NOT EXISTS KAMESH_DEMOS_S;
 USE WAREHOUSE KAMESH_DEMOS_S;
 
+-- Database to hold all the objects
 CREATE OR REPLACE DATABASE KAMESH_GIT_REPOS;
-
+-- Use the created database
 USE DATABASE KAMESH_GIT_REPOS;
+
+-- Create schema to hold all github repositories
+CREATE OR REPLACE SCHEMA GITHUB;
+USE SCHEMA GITHUB;
 
 -- Create the API Integration
 CREATE API INTEGRATION IF NOT EXISTS  kameshsampath_git
@@ -13,9 +20,6 @@ CREATE API INTEGRATION IF NOT EXISTS  kameshsampath_git
     -- allowed orgs and repositories
     API_ALLOWED_PREFIXES = ('https://github.com/kameshsampath')
     ENABLED = TRUE;
-
-CREATE OR REPLACE SCHEMA GITHUB;
-USE SCHEMA GITHUB;
 
 -- CREATE OR REPLACE SECRET my_gh_token
 --   TYPE = password
